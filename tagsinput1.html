@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="jquery.js"></script>
+    <script>
+        function sel_bnk(bnk) {
+            var id = bnk.val();
+            var name = bnk.text();
+            if($("#_tags span#tag_" + id).length == 0 && id != '') {
+                $("#_tags").append("<span class='label label-info' id='tag_" + id + "'>" + name + " &nbsp;<a href onclick='remove_tag(" + id + ",event)'>x</a></span>");
+                $('form#form input#_id').val($('form#form input#_id').val() + id + ',');
+            }
+        }
+
+        function remove_tag(id,event) {
+            event.preventDefault();
+            $("#_tags #tag_" + id).remove();
+            var string = $("input#_id").val();
+            $("input#_id").val(string.replace(id + ",", ""));
+            return false;
+        }
+    </script>
+    <link href="bootstrap.css" rel="stylesheet">
+    <title>Tags input</title>
+</head>
+<body>
+
+<select id="banks_select" class="input-group-addon" style="width: 50%;" onchange="sel_bnk($('option:selected',this))">
+    <option></option>
+    <option value="1">[192] - Тег 1</option>
+    <option value="2">[192] - Тег 2</option>
+    <option value="3">[192] - Тег 3</option>
+    <option value="4">[192] - Тег 4</option>
+    <option value="5">[192] - Тег 5</option>
+</select>
+
+<div class="col col-md-12" id="_tags"></div>
+<form id="form">
+    <input type="text" id="_id" name="_id" class="form-control" value="">
+</form>
+</body>
+</html>
